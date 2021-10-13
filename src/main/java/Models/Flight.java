@@ -4,7 +4,7 @@ public class Flight {
     private String depart;
     private String arrive;
     private boolean available;
-    private int flight_num;
+    private int flightNumber;
 
 
 
@@ -32,19 +32,19 @@ public class Flight {
         this.available = available;
     }
 
-    public int getFlight_num() {
-        return flight_num;
+    public int getFlightNumber() {
+        return flightNumber;
     }
 
-    public void setFlight_num(int flight_num) {
-        this.flight_num = flight_num;
+    public void setFlightNumber(int flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public Flight(String depart, String arrive, boolean available, int flight_num) {
         this.depart = depart;
         this.arrive = arrive;
         this.available = available;
-        this.flight_num = flight_num;
+        this.flightNumber = flight_num;
     }
 
     public Flight(String depart, String arrive, boolean available) {
