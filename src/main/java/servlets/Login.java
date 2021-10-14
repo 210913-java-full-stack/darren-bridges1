@@ -1,5 +1,7 @@
 package servlets;
 
+import Models.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,13 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(202);
-        resp.getWriter().print("Pong!");
+        User u = new User(1, "username", "password", "user");
+        String useIn = req.getParameter("username");
+        String passIn = req.getParameter("password");
+        if (useIn.equals(u.getUsername()) && passIn.equals(u.getPassword())) {
+            resp.getWriter().print("Welcome User");
+        } else {
+            resp.getWriter().print("Invalid Username or password");
+        }
     }
 }
