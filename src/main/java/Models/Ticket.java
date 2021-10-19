@@ -15,11 +15,11 @@ public class Ticket {
     @Column
     private boolean check_IN;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(nullable = false)
     private Flight flight;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(nullable = false)
     private User user;
 
