@@ -1,12 +1,28 @@
 package Models;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name="Flight_Table")
 public class Flight {
-    private String depart;
-    private String arrive;
-    private boolean available;
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int flightNumber;
 
+    @Column
+    private String depart;
 
+    @Column
+    private String arrive;
+
+    @Column
+    private boolean available;
+
+    public Flight() {
+    }
 
     public String getDepart() {
         return depart;
