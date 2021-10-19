@@ -1,9 +1,23 @@
 package Models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="User_Table")
 public class User {
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userID;
+
+    @Column
     private String username;
+
+    @Column
     private String password;
+
+    @Column
     private String roleID;
 
     public User(int userID, String username, String password, String roleID) {
@@ -11,6 +25,9 @@ public class User {
         this.username = username;
         this.password = password;
         this.roleID = roleID;
+    }
+
+    public User() {
     }
 
     public int getUserID() {

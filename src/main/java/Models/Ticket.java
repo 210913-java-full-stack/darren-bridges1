@@ -1,16 +1,30 @@
 package Models;
 
-public class Ticket {
-    private int ticketID;
-    private int userID;
-    private int flightNumber;
-    private String check_IN;
 
-    public Ticket(int ticketID, int userID, int flightNumber, String check_IN) {
-        this.ticketID = ticketID;
-        this.userID = userID;
-        this.flightNumber = flightNumber;
-        this.check_IN = check_IN;
+import javax.persistence.*;
+
+@Entity
+@Table(name="Ticket_Table")
+public class Ticket {
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int ticketID;
+
+    @Column
+    private boolean check_IN;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Flight flight;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User user;
+
+    public Ticket() {
+        this.check_IN = false;
     }
 
     public int getTicketID() {
@@ -21,27 +35,24 @@ public class Ticket {
         this.ticketID = ticketID;
     }
 
-    public int getUserID() {
-        return userID;
-    }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getFlightNumber() {
-        return flightNumber;
-    }
-
-    public void setFlightNumber(int flightNumber) {
-        this.flightNumber = flightNumber;
-    }
-
-    public String getCheck_IN() {
+    public boolean isCheck_IN() {
         return check_IN;
     }
 
-    public void setCheck_IN(String check_IN) {
-        this.check_IN = check_IN;
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

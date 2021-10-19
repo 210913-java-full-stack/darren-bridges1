@@ -1,6 +1,8 @@
 package Models;
 
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Entity
@@ -20,6 +22,9 @@ public class Flight {
 
     @Column
     private boolean available;
+
+    @OneToMany(mappedBy = "flight")
+    private List<Ticket> ticketList = new LinkedList<>();
 
     public Flight() {
     }
@@ -67,5 +72,10 @@ public class Flight {
         this.depart = depart;
         this.arrive = arrive;
         this.available = available;
+    }
+
+    public void bookFlight(Ticket ticket) {
+        ticketList.add(ticket);
+        ticket.setFlight(this);
     }
 }

@@ -1,4 +1,5 @@
 import Models.Flight;
+import Models.Ticket;
 import jdk.nashorn.internal.objects.Global;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -16,6 +17,7 @@ public class drive {
 
         Flight test = new Flight();
         Flight test2 = new Flight("dallas", "NYC", true);
+        Ticket test3 = new Ticket();
 
         Transaction transaction = FlightService.getSession().beginTransaction();
         FlightService.getSession().save(test);
