@@ -78,4 +78,10 @@ public class Flight {
         ticketList.add(ticket);
         ticket.setFlight(this);
     }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+
 }

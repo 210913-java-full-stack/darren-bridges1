@@ -55,4 +55,7 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
+    public String toString() {
+        return this.ticketID + "";
+    }
 }

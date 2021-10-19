@@ -1,6 +1,8 @@
 package Models;
 
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name="User_Table")
@@ -19,6 +21,9 @@ public class User {
 
     @Column
     private String roleID;
+
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> ticketList = new LinkedList<>();
 
     public User(int userID, String username, String password, String roleID) {
         this.userID = userID;
@@ -60,5 +65,10 @@ public class User {
 
     public void setRoleID(String roleID) {
         this.roleID = roleID;
+    }
+
+    public void buyTicket(Ticket ticket) {
+        ticketList.add(ticket);
+        ticket.setUser(this);
     }
 }
