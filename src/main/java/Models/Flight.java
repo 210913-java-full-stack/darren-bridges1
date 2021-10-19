@@ -20,6 +20,7 @@ public class Flight {
 
     @Column
     private boolean available;
+    
 
     public Flight() {
     }
