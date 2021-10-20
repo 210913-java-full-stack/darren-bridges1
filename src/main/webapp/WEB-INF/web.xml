@@ -16,9 +16,14 @@
     </listener>
 
     <servlet>
-        <servlet-name>pingServlet</servlet-name>
-        <servlet-class>servlets.PingServlet</servlet-class>
+        <servlet-name>FlightServlet</servlet-name>
+        <servlet-class>servlets.FlightServlet</servlet-class>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FlightServlet</servlet-name>
+        <url-pattern>/flight</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -30,10 +35,7 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>pingServlet</servlet-name>
-        <url-pattern>/ping</url-pattern>
-    </servlet-mapping>
+
 
     </web-app>
 

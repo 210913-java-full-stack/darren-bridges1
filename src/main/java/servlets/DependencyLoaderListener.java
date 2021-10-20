@@ -4,6 +4,7 @@ package servlets;
 
 import Models.Flight;
 import Models.Ticket;
+import Models.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import services.FlightService;
@@ -20,17 +21,20 @@ public class DependencyLoaderListener implements ServletContextListener {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();//TODO: change this to log
         }
+
         Configuration config = new Configuration();
         config.addAnnotatedClass(Flight.class);
         config.addAnnotatedClass(Ticket.class);
+        config.addAnnotatedClass(User.class);
         GlobalStore.setSessionFactory(config.buildSessionFactory());
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
-
+        Flight test = new Flight("austin", "San Diego", true);
+        REPOs.FlightRepo.addFlight(test);
 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        FlightService.getSession().close();
+        GlobalStore.getSession().close();
     }
 }
