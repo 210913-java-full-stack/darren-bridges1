@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>flightNumber</th>
+            <th>depart</th>
+            <th>arrive</th>
+            <th>Available</th>
+        </tr>
+        </thead>
+        <tbody id="Flight_Table">
+
+        </tbody>
+    </table>
+</div>
+<script>
+        (async function getToDoList() {
+            let response = await fetch("http://localhost:8080/Project1/flight");
+            let json = await response.json();
+            console.log("received");
+            let table = document.getElementById("Flight_Table");
+
+            for(let element of json) {
+                let tr = table.insertRow(-1);
+                for(let key in element) {
+                    let cell = tr.insertCell(-1);
+                    cell.innerHTML =  element[key];
+                }
+            }
+        })();
+</script>
+</body>
+</html>
