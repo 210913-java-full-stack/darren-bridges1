@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Manager</title>
+</head>
+<body>
+<form id="scheduler">
+    <label for="depart">Enter Departure Location:</label>
+    <input id="depart" type="text" name="depart" required> <br>
+    <label for="arrive">Enter Arrival Location:</label>
+    <input id="arrive" type="text" name="arrive" required> <br>
+    <button type="submit">Submit Flight</button>
+</form>
+<script>
+    const form = document.getElementById("scheduler");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("arrive.value: ", arrive.value, "\ndepart.value: ", depart.value);
+        submitSched(depart.value, arrive.value);
+    });
+
+    async function submitSched(departValue, arriveValue) {
+        let flightFormObject = {
+            depart: departValue,
+            arrive: arriveValue,
+            available: true
+        }
+
+        console.log("flightFormObject: ", flightFormObject);
+
+        let response = await fetch("http://localhost:8080/Project1/flight", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "schedule-flight"
+            },
+            body: JSON.stringify(flightFormObject)
+        });
+    }
+
+
+</script>
+</body>
+</html>
