@@ -68,6 +68,12 @@ public class Flight {
         this.flightNumber = flight_num;
     }
 
+    public Flight(String depart, String arrive) {
+        this.depart = depart;
+        this.arrive = arrive;
+        this.available = true;
+    }
+
     public Flight(String depart, String arrive, boolean available) {
         this.depart = depart;
         this.arrive = arrive;

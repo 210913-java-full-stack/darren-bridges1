@@ -2,6 +2,7 @@ package servlets;
 
 import Models.Flight;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import services.FlightService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,5 +23,10 @@ public class FlightServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setStatus(200);
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        FlightService.requestManager(req);
     }
 }
