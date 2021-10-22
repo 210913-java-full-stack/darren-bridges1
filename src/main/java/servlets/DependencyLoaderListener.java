@@ -30,8 +30,6 @@ public class DependencyLoaderListener implements ServletContextListener {
         GlobalStore.setSessionFactory(config.buildSessionFactory());
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
 
-        Flight test = new Flight("austin", "San Diego", true);
-        repos.FlightRepo.addFlight(test);
 
 
 

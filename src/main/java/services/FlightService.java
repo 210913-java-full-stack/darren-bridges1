@@ -4,7 +4,7 @@ import Models.Flight;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
-
+import repos.FlightRepo;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class FlightService {
        repos.FlightRepo.deleteByNumber(flightNum);
     }
 
-    public static void requestManager(HttpServletRequest req) {
+    public static void postRequestManager(HttpServletRequest req) {
         String header = req.getHeader("header");
         InputStream requestBody = null;
         try {
@@ -69,5 +69,22 @@ public class FlightService {
 
         }
 
+
+    }
+
+    public static String viewFlightManager(HttpServletRequest req) {
+        String header = req.getHeader("header");
+        switch(header) {
+            case "view-ind-flight":
+                try {
+                    Flight flight = FlightRepo.getFlightByNum(Integer.parseInt(req.getHeader("Id")));
+                    System.out.println(flight);
+                    return mapper.writeValueAsString(flight);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace(); //Add e logger
+                }
+                break;
+        }
+        return "NoSuchFlight";
     }
 }

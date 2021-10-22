@@ -2,6 +2,7 @@ package repos;
 
 import Models.Flight;
 import Models.Ticket;
+import jdk.nashorn.internal.objects.Global;
 import org.hibernate.Transaction;
 import services.GlobalStore;
 
@@ -26,7 +27,11 @@ public class FlightRepo {
         Query query = GlobalStore.getSession().createQuery("DELETE Flight WHERE flightNumber = :flightNumber");
         query.setParameter("flightNumber", flightNumber);
         int result = query.executeUpdate();
+        GlobalStore.getSession().flush();
+        GlobalStore.getSession().clear();
         del.commit();
+
+
     }
 
     public static void addFlight(Flight flight){
