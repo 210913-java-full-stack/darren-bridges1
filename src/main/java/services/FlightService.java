@@ -4,7 +4,8 @@ import Models.Flight;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import repos.FlightRepo;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -26,26 +27,64 @@ public class FlightService {
         FlightService.session = session;
     }
 
-    public static void scheduleFlight(Flight flight) {
-        REPOs.FlightRepo.addFlight(flight);
+    private static void scheduleFlight(Flight flight) {
+        repos.FlightRepo.addFlight(flight);
     }
 
-    public static void requestManager(HttpServletRequest req) {
+    private static void deleteFlight(int flightNum) {
+       repos.FlightRepo.deleteByNumber(flightNum);
+    }
+
+    public static void postRequestManager(HttpServletRequest req) {
         String header = req.getHeader("header");
+        InputStream requestBody = null;
+        try {
+            requestBody = req.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
         switch(header) {
             case "schedule-flight":
                 try {
-                    InputStream requestBody = req.getInputStream();
-                    Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
                     String jsonText = sc.useDelimiter("\\A").next();
                     Flight newFlight = mapper.readValue(jsonText, Flight.class);
                     scheduleFlight(newFlight);
-                } catch (JsonProcessingException e ) {
-                    e.printStackTrace(); //Add e Logger
+
                 } catch (IOException e) {
                     e.printStackTrace(); //Add e logger
                 }
+                break;
+            case "delete-flight":
+
+                String jsonText = sc.useDelimiter("\\A").next();
+                try {
+
+                    deleteFlight(mapper.readValue(jsonText, Flight.class).getFlightNumber());
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace(); //Add e logger
+                }
+                break;
+
+
         }
 
+
+    }
+
+    public static String viewFlightManager(HttpServletRequest req) {
+        String header = req.getHeader("header");
+        switch(header) {
+            case "view-ind-flight":
+                try {
+                    Flight flight = FlightRepo.getFlightByNum(Integer.parseInt(req.getHeader("Id")));
+                    System.out.println(flight);
+                    return mapper.writeValueAsString(flight);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace(); //Add e logger
+                }
+                break;
+        }
+        return "NoSuchFlight";
     }
 }

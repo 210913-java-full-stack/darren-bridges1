@@ -5,6 +5,7 @@
     <title>Flight Manager</title>
 </head>
 <body>
+
 <form id="scheduler">
     <label for="depart">Enter Departure Location:</label>
     <input id="depart" type="text" name="depart" required> <br>
@@ -12,14 +13,60 @@
     <input id="arrive" type="text" name="arrive" required> <br>
     <button type="submit">Submit Flight</button>
 </form>
-<script>
-    const form = document.getElementById("scheduler");
 
-    form.addEventListener("submit", function(event) {
+<br><br>
+<form id="deleter">
+    <label for="flightId">Enter Flight ID to Delete:</label>
+    <input id="flightId" type="number" name="flightId" required><br>
+    <button type="submit">Delete Flight</button>
+</form>
+
+<br><br>
+
+<form id="viewer">
+    <label for ="flightIdV"> Enter Flight ID to View</label>
+    <input id="flightIdV" type="number" name="flightIdV" required><br>
+    <button type="submit">View Flight</button>
+</form>
+<div id="div1"></div>
+<script>
+    const schedForm = document.getElementById("scheduler");
+    const delForm = document.getElementById("deleter");
+    const viewForm = document.getElementById("viewer");
+
+
+
+    function addElement (content) {
+        // create a new div element
+         const newDiv = document.createElement("div");
+
+        // and give it some content
+        const newContent = document.createTextNode(content);
+
+        // add the text node to the newly created div
+        newDiv.appendChild(newContent);
+
+        // add the newly created element and its content into the DOM
+        const currentDiv = document.getElementById("div1");
+        document.body.insertBefore(newDiv, currentDiv);
+    }
+
+    delForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("Delete Flight #: ", flightId.value);
+        submitDel(flightId.value);
+    });
+
+    schedForm.addEventListener("submit", function(event) {
         event.preventDefault();
         console.log("arrive.value: ", arrive.value, "\ndepart.value: ", depart.value);
         submitSched(depart.value, arrive.value);
     });
+
+    viewForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+         submitView(flightIdV.value);
+     });
 
     async function submitSched(departValue, arriveValue) {
         let flightFormObject = {
@@ -38,6 +85,51 @@
             },
             body: JSON.stringify(flightFormObject)
         });
+    }
+
+    async function submitDel(flightId) {
+        let flightFormObject = {
+            flightNumber: flightId
+        }
+
+        console.log("flightFormObject: ", flightFormObject);
+
+        let response = await fetch("http://localhost:8080/Project1/flight", {
+            method: "Post",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "delete-flight"
+            },
+            body: JSON.stringify(flightFormObject)
+        });
+    }
+
+    async function submitView(flightId) {
+
+
+
+        let response = await fetch("http://localhost:8080/Project1/flight", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "view-ind-flight",
+                "Id": flightId
+            }
+
+        });
+
+        let json = await response.json();
+        if (json == null) {
+            alert("Invalid Flight ID");
+            return;
+        }
+        let formatStr = `|  Flight Number: ${json["flightNumber"]}  |
+          Departs from: ${json["depart"]}  |
+          Arrives at: ${json["arrive"]}  |
+          Availability: ${json["available"]}  |`;
+
+        addElement(formatStr);
+
     }
 
 

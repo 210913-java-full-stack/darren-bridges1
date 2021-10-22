@@ -1,11 +1,11 @@
 import Models.Flight;
 import Models.Ticket;
 import Models.User;
-import REPOs.FlightRepo;
-import jdk.nashorn.internal.objects.Global;
+
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import services.FlightService;
+
+
 import services.GlobalStore;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class drive {
         config.addAnnotatedClass(User.class);
         GlobalStore.setSessionFactory(config.buildSessionFactory());
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
-        FlightService.setSession(GlobalStore.getSession());
+
 
         Flight test = new Flight("austin", "San Diego", true);
         Flight test2 = new Flight("dallas", "NYC", true);
@@ -31,23 +31,23 @@ public class drive {
         test2.bookFlight(test5);
         test2.bookFlight(test6);
         test4.buyTicket(test6);
-        FlightRepo.addFlight(test);
-        FlightRepo.addFlight(test2);
-        Transaction transaction = FlightService.getSession().beginTransaction();
+        repos.FlightRepo.addFlight(test);
+        repos.FlightRepo.addFlight(test2);
+        Transaction transaction = GlobalStore.getSession().beginTransaction();
 
-        FlightService.getSession().save(test3);
-        FlightService.getSession().save(test4);
-        FlightService.getSession().save(test5);
-        FlightService.getSession().save(test6);
+        GlobalStore.getSession().save(test3);
+        GlobalStore.getSession().save(test4);
+        GlobalStore.getSession().save(test5);
+        GlobalStore.getSession().save(test6);
         transaction.commit();
 
-        List<Ticket> l = FlightRepo.getFlightByNum(2).getTicketList();
+        List<Ticket> l = repos.FlightRepo.getFlightByNum(2).getTicketList();
         System.out.println(l.get(1));
         System.out.println(l.get(0));
-        for (Flight flight: FlightRepo.getAvail()) {
+        for (Flight flight: repos.FlightRepo.getAvail()) {
             System.out.println(flight.getDepart() + ", " + flight.getArrive());
         }
-        FlightRepo.deleteByNumber(1);
+        repos.FlightRepo.deleteByNumber(1);
 
         //testing branch
         //after everything is complete
