@@ -2,6 +2,7 @@ package servlets;
 
 import Models.Flight;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import repos.FlightRepo;
 import services.FlightService;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        List<Flight> flightList = REPOs.FlightRepo.getAvail();
+        List<Flight> flightList = FlightRepo.getAvail();
         ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(flightList));
         resp.getWriter().write(mapper.writeValueAsString(flightList));
@@ -27,6 +28,7 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         FlightService.requestManager(req);
     }
 }

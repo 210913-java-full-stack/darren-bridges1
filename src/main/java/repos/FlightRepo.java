@@ -1,4 +1,4 @@
-package REPOs;
+package repos;
 
 import Models.Flight;
 import Models.Ticket;
@@ -34,7 +34,7 @@ public class FlightRepo {
     public static void addFlight(Flight flight){
         Transaction add = GlobalStore.getSession().beginTransaction();
         GlobalStore.getSession().save(flight);
-        GlobalStore.getSession().getTransaction().commit();
+        add.commit();
     }
 
     public static Flight getFlightByNum(int flightNum) {

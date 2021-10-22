@@ -1,7 +1,7 @@
 import Models.Flight;
 import Models.Ticket;
 import Models.User;
-import REPOs.FlightRepo;
+import repos.FlightRepo;
 import jdk.nashorn.internal.objects.Global;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -19,7 +19,7 @@ public class drive {
         config.addAnnotatedClass(User.class);
         GlobalStore.setSessionFactory(config.buildSessionFactory());
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
-        FlightService.setSession(GlobalStore.getSession());
+
 
         Flight test = new Flight("austin", "San Diego", true);
         Flight test2 = new Flight("dallas", "NYC", true);
@@ -33,12 +33,12 @@ public class drive {
         test4.buyTicket(test6);
         FlightRepo.addFlight(test);
         FlightRepo.addFlight(test2);
-        Transaction transaction = FlightService.getSession().beginTransaction();
+        Transaction transaction = GlobalStore.getSession().beginTransaction();
 
-        FlightService.getSession().save(test3);
-        FlightService.getSession().save(test4);
-        FlightService.getSession().save(test5);
-        FlightService.getSession().save(test6);
+        GlobalStore.getSession().save(test3);
+        GlobalStore.getSession().save(test4);
+        GlobalStore.getSession().save(test5);
+        GlobalStore.getSession().save(test6);
         transaction.commit();
 
         List<Ticket> l = FlightRepo.getFlightByNum(2).getTicketList();
