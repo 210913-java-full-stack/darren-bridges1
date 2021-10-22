@@ -5,12 +5,9 @@ package servlets;
 import Models.Flight;
 import Models.Ticket;
 import Models.User;
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-import repos.FlightRepo;
-import services.FlightService;
 import services.GlobalStore;
 
 import javax.servlet.ServletContextEvent;
@@ -34,7 +31,7 @@ public class DependencyLoaderListener implements ServletContextListener {
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
 
         Flight test = new Flight("austin", "San Diego", true);
-
+        repos.FlightRepo.addFlight(test);
 
 
 

@@ -26,7 +26,7 @@ public class FlightRepo {
         Query query = GlobalStore.getSession().createQuery("DELETE Flight WHERE flightNumber = :flightNumber");
         query.setParameter("flightNumber", flightNumber);
         int result = query.executeUpdate();
-        GlobalStore.getSession().getTransaction().commit();
+        del.commit();
     }
 
     public static void addFlight(Flight flight){

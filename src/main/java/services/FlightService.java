@@ -4,7 +4,7 @@ import Models.Flight;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
-import repos.FlightRepo;
+
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,11 +28,11 @@ public class FlightService {
     }
 
     private static void scheduleFlight(Flight flight) {
-        FlightRepo.addFlight(flight);
+        repos.FlightRepo.addFlight(flight);
     }
 
     private static void deleteFlight(int flightNum) {
-       FlightRepo.deleteByNumber(flightNum);
+       repos.FlightRepo.deleteByNumber(flightNum);
     }
 
     public static void requestManager(HttpServletRequest req) {
