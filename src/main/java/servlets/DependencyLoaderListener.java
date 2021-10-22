@@ -7,6 +7,8 @@ import Models.Ticket;
 import Models.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+
 import repos.FlightRepo;
 import services.FlightService;
 import services.GlobalStore;
@@ -32,7 +34,7 @@ public class DependencyLoaderListener implements ServletContextListener {
         GlobalStore.setSession(GlobalStore.getSessionFactory().openSession());
 
         Flight test = new Flight("austin", "San Diego", true);
-        FlightRepo.addFlight(test);
+
 
 
 

@@ -2,8 +2,6 @@ package repos;
 
 import Models.Flight;
 import Models.Ticket;
-import jdk.nashorn.internal.objects.Global;
-import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import services.GlobalStore;
 
