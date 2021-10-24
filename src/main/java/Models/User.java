@@ -71,4 +71,8 @@ public class User {
         ticketList.add(ticket);
         ticket.setUser(this);
     }
+
+    public int getId() {
+        return 0;
+    }
 }
