@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet("/users")
 public class UserServlet extends HttpServlet {
-    private static UserService userService = new UserService();
+    private static UserServlet userServlet = new UserServlet();
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -23,7 +23,7 @@ public class UserServlet extends HttpServlet {
         try {
             PrintWriter out = resp.getWriter();
 
-            List<User> users = userService.getAllUsers();
+            List<User> users = UserServlet.getAllUsers();
             String usersJSON = mapper.writeValueAsString(users);
             resp.setStatus(200);
             out.write(usersJSON);
