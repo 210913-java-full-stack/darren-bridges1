@@ -56,6 +56,6 @@ public class Ticket {
         this.user = user;
     }
     public String toString() {
-        return this.ticketID + "";
+        return this.ticketID + " " + check_IN;
     }
 }

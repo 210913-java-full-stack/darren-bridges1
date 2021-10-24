@@ -24,7 +24,8 @@ public class FlightRepo {
 
     public static void deleteByNumber(int flightNumber) {
         Transaction del = GlobalStore.getSession().beginTransaction();
-        Query query = GlobalStore.getSession().createQuery("DELETE Flight WHERE flightNumber = :flightNumber");
+        Query query = GlobalStore.getSession().createQuery(
+                "DELETE Flight WHERE flightNumber = :flightNumber");
         query.setParameter("flightNumber", flightNumber);
         int result = query.executeUpdate();
         GlobalStore.getSession().flush();
@@ -44,7 +45,5 @@ public class FlightRepo {
         return GlobalStore.getSession().get(Flight.class, flightNum);
     }
 
-    public static List<Ticket> getTicketListForFlight(Flight flight){
-        return flight.getTicketList();
-    }
+
 }
