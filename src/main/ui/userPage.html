@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sign-Up</title>
 </head>
 
 <body>
@@ -10,9 +10,9 @@
     <table>
         <thead>
         <tr>
-            <th>flightNumber</th>
-            <th>depart</th>
-            <th>arrive</th>
+            <th>Flight Number</th>
+            <th>Departing From:</th>
+            <th>Arriving At:</th>
             <th>Available</th>
         </tr>
         </thead>
@@ -23,7 +23,14 @@
 </div>
 <script>
         (async function getFlightList() {
-            let response = await fetch("http://localhost:8080/Project1/flight");
+            let response = await fetch("http://localhost:8080/Project1/flight", {
+                method: "GET",
+                headers: {
+                "Content-Type": "application/json",
+                "header": "view-all-flight"
+                    }
+            });
+
             let json = await response.json();
             console.log("received");
             let table = document.getElementById("Flight_Table");

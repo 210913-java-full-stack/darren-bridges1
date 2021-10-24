@@ -14,12 +14,6 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-//        List<Flight> flightList = repos.FlightRepo.getAvail();
-//        ObjectMapper mapper = new ObjectMapper();
-//        System.out.println(mapper.writeValueAsString(flightList));
-//        resp.getWriter().write(mapper.writeValueAsString(flightList));
-//        resp.setContentType("application/json");
-//        resp.setStatus(200);
 
         resp.getWriter().write(FlightService.viewFlightManager(req));
         resp.setContentType("application/json");
