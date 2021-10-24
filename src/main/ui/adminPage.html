@@ -23,16 +23,26 @@
 
 <br><br>
 
+<form id="unavailable">
+    <label for="flightIdU"> Enter Flight ID to make unavailable</label>
+    <input id="flightIdU" type="number" name="flightIdU" required><br>
+    <button type="submit">Make Flight Unavailable</button>
+</form>
+
+<br><br>
+
 <form id="viewer">
-    <label for ="flightIdV"> Enter Flight ID to View</label>
+    <label for="flightIdV"> Enter Flight ID to View</label>
     <input id="flightIdV" type="number" name="flightIdV" required><br>
     <button type="submit">View Flight</button>
 </form>
+
 <div id="div1"></div>
 <script>
     const schedForm = document.getElementById("scheduler");
     const delForm = document.getElementById("deleter");
     const viewForm = document.getElementById("viewer");
+    const unForm = document.getElementById("unavailable");
 
 
 
@@ -66,6 +76,11 @@
     viewForm.addEventListener("submit", function(event) {
         event.preventDefault();
          submitView(flightIdV.value);
+     });
+
+     unForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitUn(flightIdU.value);
      });
 
     async function submitSched(departValue, arriveValue) {
@@ -106,8 +121,6 @@
 
     async function submitView(flightId) {
 
-
-
         let response = await fetch("http://localhost:8080/Project1/flight", {
             method: "GET",
             headers: {
@@ -115,7 +128,6 @@
                 "header": "view-ind-flight",
                 "Id": flightId
             }
-
         });
 
         let json = await response.json();
@@ -129,8 +141,26 @@
           Availability: ${json["available"]}  |`;
 
         addElement(formatStr);
+        }
 
+
+    async function submitUn(flightId) {
+        let flightFormObject = {
+            flightNumber: flightId
+        }
+
+        console.log("flightFormObject: ", flightFormObject);
+
+        let response = await fetch("http://localhost:8080/Project1/flight", {
+            method: "Post",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "un-flight"
+            },
+            body: JSON.stringify(flightFormObject)
+        });
     }
+
 
 
 </script>

@@ -45,5 +45,16 @@ public class FlightRepo {
         return GlobalStore.getSession().get(Flight.class, flightNum);
     }
 
+    public static void makeUnavailable(int flightNum) {
+        Transaction upd = GlobalStore.getSession().beginTransaction();
+        Query query = GlobalStore.getSession().createQuery(
+                "UPDATE Flight SET available = false WHERE flightNumber = :flightNum");
+        query.setParameter("flightNum", flightNum);
+        int result = query.executeUpdate();
+        GlobalStore.getSession().flush();
+        GlobalStore.getSession().clear();
+        upd.commit();
+    }
+
 
 }

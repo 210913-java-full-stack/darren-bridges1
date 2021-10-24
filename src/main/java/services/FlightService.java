@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FlightService {
@@ -28,11 +30,15 @@ public class FlightService {
     }
 
     private static void scheduleFlight(Flight flight) {
-        repos.FlightRepo.addFlight(flight);
+        FlightRepo.addFlight(flight);
     }
 
     private static void deleteFlight(int flightNum) {
-       repos.FlightRepo.deleteByNumber(flightNum);
+       FlightRepo.deleteByNumber(flightNum);
+    }
+
+    private static void makeUn(int flightNum) {
+        FlightRepo.makeUnavailable(flightNum);
     }
 
     public static void postRequestManager(HttpServletRequest req) {
@@ -57,12 +63,19 @@ public class FlightService {
                 break;
             case "delete-flight":
 
-                String jsonText = sc.useDelimiter("\\A").next();
                 try {
-
+                    String jsonText = sc.useDelimiter("\\A").next();
                     deleteFlight(mapper.readValue(jsonText, Flight.class).getFlightNumber());
                 } catch (JsonProcessingException e) {
                     e.printStackTrace(); //Add e logger
+                }
+                break;
+            case "un-flight":
+                try {
+                    String jsonText = sc.useDelimiter("\\A").next();
+                    makeUn(mapper.readValue(jsonText, Flight.class).getFlightNumber());
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
                 }
                 break;
 
@@ -78,12 +91,21 @@ public class FlightService {
             case "view-ind-flight":
                 try {
                     Flight flight = FlightRepo.getFlightByNum(Integer.parseInt(req.getHeader("Id")));
-                    System.out.println(flight);
                     return mapper.writeValueAsString(flight);
                 } catch (JsonProcessingException e) {
                     e.printStackTrace(); //Add e logger
                 }
                 break;
+            case "view-all-flight":
+                List<Flight> flightList = FlightRepo.getAvail();
+                try {
+                    return mapper.writeValueAsString(flightList);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+
         }
         return "NoSuchFlight";
     }
