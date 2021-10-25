@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 
 import repos.FlightRepo;
 import repos.TicketRepo;
+import repos.UserRepo;
 import services.GlobalStore;
 
 import java.util.List;
@@ -42,21 +43,19 @@ public class drive {
         TicketRepo.purchaseTicket(test2, test4);
 
         List<Ticket> l = FlightRepo.getFlightByNum(2).getTicketList();
-        System.out.println(l.get(1));
-        System.out.println(l.get(0));
+
         for (Flight flight: repos.FlightRepo.getAvail()) {
             System.out.println(flight.getDepart() + ", " + flight.getArrive());
         }
         TicketRepo.checkIn(1);
         List<Ticket> t = TicketRepo.getTicketListForFlight(2);
 
-        System.out.println(t.get(0));
-        System.out.println(t.get(1));
+
         repos.FlightRepo.deleteByNumber(1);
 
         TicketRepo.cancelTicket(2);
-        //testing branch
-        //after everything is complete
+        System.out.println(UserRepo.getUser("username"));
+
         GlobalStore.getSession().close();
 
     }

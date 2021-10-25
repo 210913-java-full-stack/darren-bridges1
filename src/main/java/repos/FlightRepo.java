@@ -19,7 +19,11 @@ public class FlightRepo {
         CriteriaQuery<Flight> query = build.createQuery(Flight.class);
         Root<Flight> root = query.from(Flight.class);
         query.select(root).where(build.equal( root.get("available"), 1) );
-        return GlobalStore.getSession().createQuery(query).getResultList();
+        List<Flight> ret = GlobalStore.getSession().createQuery(query).getResultList();
+        for (int i = 0; i < ret.size(); i++) {
+            ret.get(i).clearList();
+        }
+        return ret;
     }
 
     public static void deleteByNumber(int flightNumber) {
