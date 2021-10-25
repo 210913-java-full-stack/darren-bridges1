@@ -3,16 +3,14 @@ package repos;
 import Models.Flight;
 import Models.Ticket;
 import Models.User;
-import jdk.nashorn.internal.objects.Global;
-import org.hibernate.Criteria;
+
+
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
+
 import services.GlobalStore;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+
 import java.util.LinkedList;
 import java.util.List;
 

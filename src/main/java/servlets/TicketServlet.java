@@ -1,7 +1,7 @@
 package servlets;
 
-
 import services.FlightService;
+import services.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,21 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class FlightServlet extends HttpServlet {
-
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        resp.getWriter().write(FlightService.viewFlightManager(req));
-        resp.setContentType("application/json");
-        resp.setStatus(200);
-
-    }
-
+public class TicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            FlightService.postRequestManager(req);
+        TicketService.postRequestManager(req);
 
     }
 }

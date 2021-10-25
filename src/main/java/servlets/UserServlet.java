@@ -1,15 +1,23 @@
 package servlets;
 
+
 import Models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+
+import services.FlightService;
+import services.UserService;
+
+import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -44,3 +52,17 @@ public class UserServlet extends HttpServlet {
     }
 
 }
+
+
+
+
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//        resp.getWriter().write(UserService.viewUser(req));
+//        resp.setContentType("application/json");
+//        resp.setStatus(200);
+//
+//    }
+
+

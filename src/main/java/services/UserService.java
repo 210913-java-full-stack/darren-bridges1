@@ -1,13 +1,26 @@
 package services;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import Models.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
- class User {
+import repos.UserRepo;
 
+import javax.servlet.http.HttpServletRequest;
+
+ public class UserService {
+
+    private static ObjectMapper mapper = new ObjectMapper();
+
+    private static User getUser(String username) {
+         return UserRepo.getUser(username);
+     }
     private String userName;
     private String password;
 
@@ -101,8 +114,24 @@ import java.util.Properties;
         }
         return success;
     }
-}
 
+     public static String viewUser(HttpServletRequest req) {
+         String header = req.getHeader("header");
+         switch(header) {
+             case "view-ind-user":
+                 try {
+                     User user = UserRepo.getUser(req.getHeader("Username"));
+                     return mapper.writeValueAsString(user);
+                 } catch (JsonProcessingException e) {
+                     e.printStackTrace(); //Add e logger
+                 }
+                 break;
+
+
+         }
+         return "NoSuchFlight";
+     }
+}
 
 
 

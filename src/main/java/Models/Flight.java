@@ -26,6 +26,10 @@ public class Flight {
     @OneToMany(mappedBy = "flight")
     private List<Ticket> ticketList = new LinkedList<>();
 
+    public void clearList() {
+        ticketList.clear();
+    }
+
     public Flight() {
     }
 
