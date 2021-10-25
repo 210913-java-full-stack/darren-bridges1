@@ -49,13 +49,45 @@
 <form>
     <div class="container">
         <label> Username:</label>
-        <input type ="text" placeholder="Enter Username" name="username" required>
+        <input type ="text" placeholder="Enter Username" name="username" id="username" required>
         <label> Password:</label>
-        <input type ="Password" placeholder="Enter Password" name="password" required>
+        <input type ="Password" placeholder="Enter Password" name="password" id="password" required>
         <button type="submit">Login</button>
         <button type="button" class="cancelbtn">Cancel</button>
 
+
     </div>
+
 </form>
+    <script>
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            //const { message, complete = false } = event.target.elements;
+            console.log("message.value: ", message.value);
+            submitForm(message.value);
+        });
+
+        async function submitForm(messageValue) {
+            let formObject = {
+                username: userVar
+                password: passVar
+            }
+
+            console.log("formObject: ", formObject);
+
+            //http://localhost:8080/to-do-api/toDoItems
+            //http://todoapp.us-east-2.elasticbeanstalk.com/toDoItems
+<!--            let response = await fetch("http://todoapp.us-east-2.elasticbeanstalk.com/toDoItems", {-->
+<!--                method: "POST",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json",-->
+<!--                    "payload-type": "new-item"-->
+<!--                },-->
+<!--                body: JSON.stringify(formObject)-->
+<!--            });  -->
+
+            </script>
 </body>
 </html>
