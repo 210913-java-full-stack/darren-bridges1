@@ -36,7 +36,8 @@ import javax.servlet.http.HttpServletRequest;
     public void setPassword(String password) {
         this.password = password;
     }
-    public User(String userName, String password) {
+
+    public UserService(String userName, String password) {
         super();
         this.userName = userName;
         this.password = password;
@@ -50,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
         try {
             fis = new FileInputStream(propFilePath);
             p.load(fis);
-            p.setProperty(aUser.getUserName(), aUser.getPassword());
+            p.setProperty(aUser.getUsername(), aUser.getPassword());
             p.store(new FileOutputStream(propFilePath), null);
 
         } catch (FileNotFoundException e) {
@@ -82,11 +83,11 @@ import javax.servlet.http.HttpServletRequest;
             p.load(fis);
 
             // Checks whether the username exists or not
-            if(!p.containsKey(aUser.getUserName())) {
+            if(!p.containsKey(aUser.getUsername())) {
                 // Link-redirection
                 success = false;
             }  else { // Checks whether the password matches or not
-                String pword = p.getProperty(aUser.getUserName());
+                String pword = p.getProperty(aUser.getUsername());
                 if(!pword.equals(aUser.getPassword())) {
                     success = false; // Link-redirection
                 } else {
