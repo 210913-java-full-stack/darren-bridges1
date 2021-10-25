@@ -32,7 +32,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User() {
+    public User(int id, String username, String hash, int roleId) {
     }
 
     public int getUserID() {
@@ -70,6 +70,11 @@ public class User {
     public void buyTicket(Ticket ticket) {
         ticketList.add(ticket);
         ticket.setUser(this);
+    }
+
+
+    public int getId() {
+        return 0;
     }
 
 }
