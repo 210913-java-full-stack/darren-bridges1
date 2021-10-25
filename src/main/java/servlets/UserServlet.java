@@ -1,18 +1,22 @@
 package servlets;
 
+import services.FlightService;
+import services.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class PingServlet extends HttpServlet {
-    /*
-    This is a sample servlet get function, we need to edit
-     */
+public class UserServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(202);
-        resp.getWriter().print("Pong!");
+
+        resp.getWriter().write(UserService.viewUser(req));
+        resp.setContentType("application/json");
+        resp.setStatus(200);
+
     }
 }

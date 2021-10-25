@@ -21,7 +21,57 @@
         </tbody>
     </table>
 </div>
+
+<br><br>
+
+<form id="purchase">
+    <label for="flightIdP">Enter Flight To Buy Ticket For:</label>
+    <input id="flightIdP" type="number" name="flightIdP" required><br>
+    <button type="submit">Purchase Ticket</button>
+</form>
+
 <script>
+    const purchaseForm = document.getElementById("purchase");
+
+    console.log(currentUser);
+
+    async function getUserId(Username) {
+
+        let response = await fetch("http://localhost:8080/Project1/user", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "view-ind-user",
+                "Username": Username
+            }
+        });
+        let json = await response.json();
+        return json["userID"];
+    }
+
+    var currentUser = getUserId("username");
+
+    purchaseForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitPurchase(flightIdP.value, 2);
+    });
+
+    async function submitPurchase(flightId, currentUser) {
+        let flightFormObject = {
+            flightNumber: flightId
+        }
+
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "purchase-ticket",
+                "user": currentUser
+            },
+            body: JSON.stringify(flightFormObject)
+        });
+    }
+
         (async function getFlightList() {
             let response = await fetch("http://localhost:8080/Project1/flight", {
                 method: "GET",
@@ -43,6 +93,8 @@
                 }
             }
         })();
+
+
 </script>
 </body>
 </html>

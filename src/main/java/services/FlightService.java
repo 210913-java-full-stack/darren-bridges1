@@ -18,16 +18,10 @@ import java.util.Scanner;
 public class FlightService {
 
     private static ObjectMapper mapper = new ObjectMapper();
-    private static Session session;
 
 
-    public static Session getSession() {
-        return session;
-    }
 
-    public static void setSession(Session session) {
-        FlightService.session = session;
-    }
+
 
     private static void scheduleFlight(Flight flight) {
         FlightRepo.addFlight(flight);
@@ -97,7 +91,9 @@ public class FlightService {
                 }
                 break;
             case "view-all-flight":
+
                 List<Flight> flightList = FlightRepo.getAvail();
+
                 try {
                     return mapper.writeValueAsString(flightList);
                 } catch (JsonProcessingException e) {

@@ -71,4 +71,5 @@ public class User {
         ticketList.add(ticket);
         ticket.setUser(this);
     }
+
 }
