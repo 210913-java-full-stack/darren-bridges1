@@ -32,7 +32,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User() {
+    public User(int id, String username, String hash, int roleId) {
     }
 
     public int getUserID() {

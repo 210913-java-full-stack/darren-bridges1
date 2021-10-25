@@ -39,4 +39,8 @@ public class UserServlet extends HttpServlet {
 
     }
 
+    private static List<User> getAllUsers() {
+        return null;
+    }
+
 }

@@ -2,6 +2,7 @@ package repos;
 
 
 import Models.User;
+import Util.ConnectionManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -43,7 +44,7 @@ public class UserRepo {
 
     public String getToken(User user) {
         String query = "SELECT auth_token FROM authentications WHERE user_id = ?";
-        try (Connection conn = ConnectionUtility.getConnection()) {
+        try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
@@ -57,7 +58,7 @@ public class UserRepo {
     public String generateToken(User user) {
         String query = "INSERT INTO authentications (userId, auth_token)"
                 + " VALUES (?,md5(? || now())) RETURNING auth_token";
-        try (Connection conn = ConnectionUtility.getConnection()) {
+        try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, user.getId());
             ps.setString(2, user.getUsername());
@@ -74,7 +75,7 @@ public class UserRepo {
         String query = "SELECT Users.* FROM Users LEFT JOIN authentications"
                 + " ON Users.UserId = authentications.UserId WHERE"
                 + " authentications.auth_token = ?";
-        try (Connection conn = ConnectionUtility.getConnection()) {
+        try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, auth_token);
             ResultSet rs = ps.executeQuery();
@@ -87,7 +88,7 @@ public class UserRepo {
 
     public User getUserFromId(int userId) {
         String query = "SELECT * FROM Users WHERE UserId = ?";
-        try (Connection conn = ConnectionUtility.getConnection()) {
+        try (Connection conn = ConnectionManager.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
