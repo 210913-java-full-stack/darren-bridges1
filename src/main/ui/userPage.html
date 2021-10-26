@@ -72,21 +72,21 @@
     const cancelForm = document.getElementById("cancel");
 
 
-    async function getUserId(Username) {
+<!--    async function getUserId(Username) {-->
 
-        let response = await fetch("http://localhost:8080/Project1/user", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "header": "view-ind-user",
-                "Username": Username
-            }
-        });
-        let json = await response.json();
-        return await json["userID"];
-    }
+<!--        let response = await fetch("http://localhost:8080/Project1/user", {-->
+<!--            method: "GET",-->
+<!--            headers: {-->
+<!--                "Content-Type": "application/json",-->
+<!--                "header": "view-ind-user",-->
+<!--                "Username": Username-->
+<!--            }-->
+<!--        });-->
+<!--        let json = await response.json();-->
+<!--        return await json["userID"];-->
+<!--    }-->
 
-    var currentUser = getUserId("username");
+    var currentUser = 2;
 
     checkinForm.addEventListener("submit", function(event) {
         event.preventDefault();

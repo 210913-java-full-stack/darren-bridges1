@@ -13,6 +13,7 @@ import repos.TicketRepo;
 import repos.UserRepo;
 import services.GlobalStore;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class drive {
@@ -62,9 +63,19 @@ public class drive {
 
         ObjectMapper om = new ObjectMapper();
 
-        List<Ticket> tl = TicketRepo.getTicketsByFlight(2);
-        for (int i = 0; i < tl.size(); i++) {
-            System.out.println(tl.get(i).getUser());
+
+
+        List<User> ret = new LinkedList<>();
+        List<Ticket> repoRet = TicketRepo.getTicketsByFlight(2);
+        String stringRet = null;
+        for (int i = 0; i < repoRet.size(); i++) {
+            ret.add(repoRet.get(i).getUser());
+        }
+        try {
+            stringRet = om.writeValueAsString(ret);
+            System.out.println(stringRet);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
 
         //FlightService fs = new FlightService();
