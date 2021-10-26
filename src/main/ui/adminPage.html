@@ -19,9 +19,14 @@
 
     </style>
 </head>
-<body>
+
+
+<body id="body">
+
+
 
 <center> <h1> Admin Page</h1></center>
+
 
 <form id="scheduler">
   <center> <label for="depart">Enter Departure Location:</label></center>
@@ -54,12 +59,26 @@
   <center> <button type="submit">View Flight</button> </center>
 </form>
 
-<div id="div1"></div>
+<br><br>
+
+<form id="pviewer">
+    <center> <label for="flightIdVP"> Enter Flight ID to View Passenger List</label> </center>
+    <center> <input id="flightIdVP" type="number" name="flightIdVP" required><br> </center>
+    <center> <button type="submit">View Passenger List</button> </center>
+</form>
+
 <script>
     const schedForm = document.getElementById("scheduler");
     const delForm = document.getElementById("deleter");
     const viewForm = document.getElementById("viewer");
     const unForm = document.getElementById("unavailable");
+    const pviewForm = document.getElementById("pviewer");
+
+
+    pviewForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitpView(flightIdVP.value);
+     });
 
 
 
@@ -74,8 +93,8 @@
         newDiv.appendChild(newContent);
 
         // add the newly created element and its content into the DOM
-        const currentDiv = document.getElementById("div1");
-        document.body.insertBefore(newDiv, currentDiv);
+
+        document.getElementById('body').appendChild(newDiv);
     }
 
     delForm.addEventListener("submit", function(event) {
@@ -157,9 +176,13 @@
           Arrives at: ${json["arrive"]}  |
           Availability: ${json["available"]}  |`;
 
-        addElement(formatStr);
+        await addElement(formatStr);
+
         }
 
+    async function submitpView(flightId) {
+        await addPass(flightId);
+    }
 
     async function submitUn(flightId) {
         let flightFormObject = {
@@ -176,6 +199,49 @@
             },
             body: JSON.stringify(flightFormObject)
         });
+    }
+
+    async function addPass(flightId) {
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        let row_1 = document.createElement('tr');
+        let heading_1 = document.createElement('th');
+        heading_1.innerHTML = "Passenger List (By User ID):";
+        row_1.appendChild(heading_1);
+        thead.appendChild(row_1);
+
+        document.getElementById('body').appendChild(table);
+        alert("sanity check");
+        console.log("flightId: ", flightId)
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "header": "view-tickets-of-flight",
+            "flight": flightId
+            }
+        });
+
+        let json = await response.json();
+        console.log(json);
+
+
+        for (let user of json) {
+            let row = document.createElement('tr');
+            let row_data = document.createElement('td');
+            row_data.innerHTML = user["userID"];
+            row.appendChild(row_data);
+            tbody.appendChild(row);
+        }
+
+
+
+
     }
 
 

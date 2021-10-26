@@ -72,5 +72,13 @@ public class TicketRepo {
         return ret;
     }
 
+    public static List<Ticket> getTicketsByFlight(int flightNum) {
+        CriteriaBuilder build = GlobalStore.getSession().getCriteriaBuilder();
+        CriteriaQuery<Flight> query = build.createQuery(Flight.class);
+        Root<Flight> root = query.from(Flight.class);
+        query.select(root).where(build.equal( root.get("flightNumber"), flightNum) );
+        Flight ret = GlobalStore.getSession().createQuery(query).getSingleResult();
+        return ret.getTicketList();
+    }
 
 }

@@ -3,6 +3,7 @@ package services;
 import Models.Flight;
 import Models.ModTicket;
 import Models.Ticket;
+import Models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -26,11 +27,26 @@ public class TicketService {
         TicketRepo.purchaseTicket(FlightRepo.getFlightByNum(flightId), UserRepo.getUserByNum(userId));
     }
 
-    public static int testMeth() {
-        return 1;
+
+    public static String getFlightTickets(int flight) {
+        System.out.println("Flight number: " + flight);
+        List<User> ret = new LinkedList<>();
+        List<Ticket> repoRet = TicketRepo.getTicketsByFlight(2);
+        String stringRet = null;
+        System.out.println("repoRet size: " + repoRet.size());
+        for (int i = 0; i < repoRet.size(); i++) {
+            ret.add(repoRet.get(i).getUser());
+        }
+        try {
+            stringRet = mapper.writeValueAsString(ret);
+            System.out.println("stringRet: " + stringRet);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return stringRet;
     }
 
-    public static String getAllTickets(int use) throws JsonProcessingException {
+    public static String getAllTickets(int use) {
         List<ModTicket> retList = new LinkedList<>();
         List<Ticket> repoRet = TicketRepo.getMyTickets(use);
         for (int i = 0; i < repoRet.size(); i++) {
@@ -38,7 +54,12 @@ public class TicketService {
                     repoRet.get(i).getFlight().getFlightNumber(),
                     repoRet.get(i).isCheck_IN()));
         }
-        String ret = mapper.writeValueAsString(retList);
+        String ret = null;
+        try {
+            ret = mapper.writeValueAsString(retList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return ret;
     }
 
@@ -67,7 +88,6 @@ public class TicketService {
                     int userId = Integer.parseInt(req.getHeader("user"));
                     int flightId = mapper.readValue(jsonText, Flight.class).getFlightNumber();
                     purchaseFlight(userId, flightId);
-                    System.out.println(testMeth());
 
                 } catch (IOException e) {
                     e.printStackTrace(); //Add e logger
@@ -78,15 +98,14 @@ public class TicketService {
 
     public static String viewTicketManager(HttpServletRequest req) {
         String header = req.getHeader("header");
-        int userId = Integer.parseInt(req.getHeader("user"));
+
         switch (header) {
             case "view-my-ticket":
-                try {
-                    return getAllTickets(userId);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                break;
+                int userId = Integer.parseInt(req.getHeader("user"));
+                return getAllTickets(userId);
+            case "view-tickets-of-flight":
+                int flightId = Integer.parseInt(req.getHeader("flight"));
+                return getFlightTickets(flightId);
         }
 
         return "noSuchTickets";

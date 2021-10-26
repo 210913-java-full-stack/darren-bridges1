@@ -45,6 +45,8 @@ public class FlightRepo {
         add.commit();
     }
 
+
+
     public static Flight getFlightByNum(int flightNum) {
         CriteriaBuilder build = GlobalStore.getSession().getCriteriaBuilder();
         CriteriaQuery<Flight> query = build.createQuery(Flight.class);
