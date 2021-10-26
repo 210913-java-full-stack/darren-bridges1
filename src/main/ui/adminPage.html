@@ -3,38 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Flight Manager</title>
+    <style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
 </head>
 <body>
+<center> <h1> Admin Page</h1></center>
 
 <form id="scheduler">
-    <label for="depart">Enter Departure Location:</label>
-    <input id="depart" type="text" name="depart" required> <br>
-    <label for="arrive">Enter Arrival Location:</label>
-    <input id="arrive" type="text" name="arrive" required> <br>
-    <button type="submit">Submit Flight</button>
+  <center> <label for="depart">Enter Departure Location:</label></center>
+  <center>  <input id="depart" type="text" name="depart" required> <br></center>
+    <center> <label for="arrive">Enter Arrival Location:</label></center>
+   <center> <input id="arrive" type="text" name="arrive" required> <br></center>
+   <center> <button type="submit">Submit Flight</button></center>
 </form>
 
 <br><br>
 <form id="deleter">
-    <label for="flightId">Enter Flight ID to Delete:</label>
-    <input id="flightId" type="number" name="flightId" required><br>
-    <button type="submit">Delete Flight</button>
+   <center> <label for="flightId">Enter Flight ID to Delete:</label> </center>
+    <center>  <input id="flightId" type="number" name="flightId" required><br> </center>
+  <center>  <button type="submit">Delete Flight</button> </center>
 </form>
 
 <br><br>
 
 <form id="unavailable">
-    <label for="flightIdU"> Enter Flight ID to make unavailable</label>
-    <input id="flightIdU" type="number" name="flightIdU" required><br>
-    <button type="submit">Make Flight Unavailable</button>
+   <center> <label for="flightIdU"> Enter Flight ID to make unavailable</label> </center>
+    <center> <input id="flightIdU" type="number" name="flightIdU" required><br> </center>
+   <center>  <button type="submit">Make Flight Unavailable</button> </center>
 </form>
 
 <br><br>
 
 <form id="viewer">
-    <label for="flightIdV"> Enter Flight ID to View</label>
-    <input id="flightIdV" type="number" name="flightIdV" required><br>
-    <button type="submit">View Flight</button>
+   <center> <label for="flightIdV"> Enter Flight ID to View</label> </center>
+    <center> <input id="flightIdV" type="number" name="flightIdV" required><br> </center>
+  <center> <button type="submit">View Flight</button> </center>
 </form>
 
 <div id="div1"></div>
