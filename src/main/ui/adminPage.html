@@ -19,8 +19,12 @@
 
     </style>
 </head>
-<body>
+
+<body id="body">
+
+
 <center> <h1> Admin Page</h1></center>
+
 
 <form id="scheduler">
   <center> <label for="depart">Enter Departure Location:</label></center>
@@ -73,8 +77,8 @@
         newDiv.appendChild(newContent);
 
         // add the newly created element and its content into the DOM
-        const currentDiv = document.getElementById("div1");
-        document.body.insertBefore(newDiv, currentDiv);
+
+        document.getElementById('body').appendChild(newDiv);
     }
 
     delForm.addEventListener("submit", function(event) {
@@ -157,6 +161,7 @@
           Availability: ${json["available"]}  |`;
 
         addElement(formatStr);
+        addPass(flightId);
         }
 
 
@@ -175,6 +180,47 @@
             },
             body: JSON.stringify(flightFormObject)
         });
+    }
+
+    async function addPass(flightId) {
+        let table = document.createElement('table');
+        let thead = document.createElement('thead');
+        let tbody = document.createElement('tbody');
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        let row_1 = document.createElement('tr');
+        let heading_1 = document.createElement('th');
+        heading_1.innerHTML = "Passenger List (By User ID):";
+        row_1.appendChild(heading_1);
+        thead.appendChild(row_1);
+
+        document.getElementById('body').appendChild(table);
+
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "header": "view-tickets-of-flight",
+            "flight": flightId
+            }
+        });
+
+        let json = await response.json();
+
+
+        for (let i = 0; i < 3; i++) {
+            let row = document.createElement('tr');
+            let row_data = document.createElement('td');
+            row_data.innerHTML = i;
+            row.appendChild(row_data);
+            tbody.appendChild(row);
+        }
+
+
+
+
     }
 
 
