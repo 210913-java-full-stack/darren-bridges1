@@ -30,31 +30,108 @@
     <button type="submit">Purchase Ticket</button>
 </form>
 
+<br><br>
+
+<form id="checkin">
+    <label for="ticketIdC">Enter Ticket to Check In: </label>
+    <input id="ticketIdC" type="number" name="ticketIdC" required><br>
+    <button type="submit">Check In</button>
+</form>
+
+<br><br>
+
+<form id="cancel">
+    <label for="ticketIdX">Enter Ticket to Cancel: </label>
+    <input id="ticketIdX" type="number" name="ticketIdX" required><br>
+    <button type="submit">Cancel</button>
+</form>
+
+<br><br>
+
+<div>
+    My Tickets:
+    <table>
+        <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Flight Number</th>
+            <th>Checked In?</th>
+        </tr>
+        </thead>
+        <tbody id="myTickets">
+
+        </tbody>
+    </table>
+</div>
+
+
+
 <script>
     const purchaseForm = document.getElementById("purchase");
+    const checkinForm = document.getElementById("checkin");
+    const cancelForm = document.getElementById("cancel");
 
-    console.log(currentUser);
 
-    async function getUserId(Username) {
+<!--    async function getUserId(Username) {-->
 
-        let response = await fetch("http://localhost:8080/Project1/user", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "header": "view-ind-user",
-                "Username": Username
-            }
-        });
-        let json = await response.json();
-        return json["userID"];
-    }
+<!--        let response = await fetch("http://localhost:8080/Project1/user", {-->
+<!--            method: "GET",-->
+<!--            headers: {-->
+<!--                "Content-Type": "application/json",-->
+<!--                "header": "view-ind-user",-->
+<!--                "Username": Username-->
+<!--            }-->
+<!--        });-->
+<!--        let json = await response.json();-->
+<!--        return json["userID"];-->
+<!--    }-->
 
-    var currentUser = getUserId("username");
+    var currentUser = 2;
+
+    checkinForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitCheckin(ticketIdC.value)
+    });
+
+    cancelForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitCancel(ticketIdX.value)
+    });
 
     purchaseForm.addEventListener("submit", function(event) {
         event.preventDefault();
         submitPurchase(flightIdP.value, 2);
     });
+
+    async function submitCancel(ticketId) {
+        let ticketFormObject = {
+            ticketID: ticketId
+        }
+
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "cancel"
+            },
+            body: JSON.stringify(ticketFormObject)
+        });
+    }
+
+    async function submitCheckin(ticketId) {
+        let ticketFormObject = {
+            ticketID: ticketId
+        }
+
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "check-in"
+            },
+            body: JSON.stringify(ticketFormObject)
+        });
+    }
 
     async function submitPurchase(flightId, currentUser) {
         let flightFormObject = {
@@ -72,27 +149,54 @@
         });
     }
 
-        (async function getFlightList() {
-            let response = await fetch("http://localhost:8080/Project1/flight", {
-                method: "GET",
-                headers: {
-                "Content-Type": "application/json",
-                "header": "view-all-flight"
-                    }
-            });
-
-            let json = await response.json();
-            console.log("received");
-            let table = document.getElementById("Flight_Table");
-
-            for(let element of json) {
-                let tr = table.insertRow(-1);
-                for(let key in element) {
-                    let cell = tr.insertCell(-1);
-                    cell.innerHTML =  element[key];
-                }
+    (async function getFlightList() {
+        let response = await fetch("http://localhost:8080/Project1/flight", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "header": "view-all-flight"
             }
-        })();
+        });
+
+        let json = await response.json();
+        console.log("received");
+        let table = document.getElementById("Flight_Table");
+
+        for(let element of json) {
+            let tr = table.insertRow(-1);
+            for(let key in element) {
+                let cell = tr.insertCell(-1);
+                cell.innerHTML =  element[key];
+            }
+        }
+    })();
+
+
+    (async function getTicketList() {
+
+
+        console.log("I hate Javascript");
+        let response = await fetch("http://localhost:8080/Project1/ticket", {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "header": "view-my-ticket",
+            "user": "2"
+            }
+        });
+
+        let json = await response.json();
+        console.log("received");
+        let table = document.getElementById("myTickets");
+
+        for(let element of json) {
+            let ttr = table.insertRow(-1);
+            for(let key in element) {
+                let cell = ttr.insertCell(-1);
+                cell.innerHTML =  element[key];
+            }
+        }
+    })();
 
 
 </script>

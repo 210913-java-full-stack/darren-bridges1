@@ -46,7 +46,15 @@ public class FlightRepo {
     }
 
     public static Flight getFlightByNum(int flightNum) {
-        return GlobalStore.getSession().get(Flight.class, flightNum);
+        CriteriaBuilder build = GlobalStore.getSession().getCriteriaBuilder();
+        CriteriaQuery<Flight> query = build.createQuery(Flight.class);
+        Root<Flight> root = query.from(Flight.class);
+        query.select(root).where(build.equal( root.get("flightNumber"), flightNum) );
+        List<Flight> ret = GlobalStore.getSession().createQuery(query).getResultList();
+        for (int i = 0; i < ret.size(); i++) {
+            ret.get(i).clearList();
+        }
+        return ret.get(0);
     }
 
     public static void makeUnavailable(int flightNum) {
