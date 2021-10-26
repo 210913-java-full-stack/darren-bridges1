@@ -2,19 +2,24 @@ import Models.Flight;
 import Models.Ticket;
 import Models.User;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 
 import repos.FlightRepo;
 import repos.TicketRepo;
+import repos.UserRepo;
 import services.GlobalStore;
+import services.TicketService;
 
 import java.util.List;
 
 public class drive {
-    public static void main(String args[]) throws ClassNotFoundException {
+    public static void main(String args[]) throws ClassNotFoundException, JsonProcessingException {
         Class.forName("org.mariadb.jdbc.Driver");
+
         Configuration config = new Configuration();
         config.addAnnotatedClass(Flight.class);
         config.addAnnotatedClass(Ticket.class);
@@ -42,21 +47,31 @@ public class drive {
         TicketRepo.purchaseTicket(test2, test4);
 
         List<Ticket> l = FlightRepo.getFlightByNum(2).getTicketList();
-        System.out.println(l.get(1));
-        System.out.println(l.get(0));
+
         for (Flight flight: repos.FlightRepo.getAvail()) {
             System.out.println(flight.getDepart() + ", " + flight.getArrive());
         }
         TicketRepo.checkIn(1);
         List<Ticket> t = TicketRepo.getTicketListForFlight(2);
 
-        System.out.println(t.get(0));
-        System.out.println(t.get(1));
+
         repos.FlightRepo.deleteByNumber(1);
 
-        TicketRepo.cancelTicket(2);
-        //testing branch
-        //after everything is complete
+
+        System.out.println(UserRepo.getUser("username"));
+
+
+        ObjectMapper om = new ObjectMapper();
+
+
+        TicketService.testMeth();
+
+
+        //System.out.println(om.writeValueAsString(ret));
+
+
+
+
         GlobalStore.getSession().close();
 
     }

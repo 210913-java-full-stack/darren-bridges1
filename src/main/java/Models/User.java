@@ -25,6 +25,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ticket> ticketList = new LinkedList<>();
 
+    public User() {
+    }
+
     public User(int userID, String username, String password, String roleID) {
         this.userID = userID;
         this.username = username;
@@ -32,7 +35,7 @@ public class User {
         this.roleID = roleID;
     }
 
-    public User() {
+    public User(int id, String username, String hash, int roleId) {
     }
 
     public int getUserID() {
@@ -71,4 +74,10 @@ public class User {
         ticketList.add(ticket);
         ticket.setUser(this);
     }
+
+
+    public int getId() {
+        return 0;
+    }
+
 }
