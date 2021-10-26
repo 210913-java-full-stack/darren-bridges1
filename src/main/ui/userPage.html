@@ -72,21 +72,21 @@
     const cancelForm = document.getElementById("cancel");
 
 
-<!--    async function getUserId(Username) {-->
+    async function getUserId(Username) {
 
-<!--        let response = await fetch("http://localhost:8080/Project1/user", {-->
-<!--            method: "GET",-->
-<!--            headers: {-->
-<!--                "Content-Type": "application/json",-->
-<!--                "header": "view-ind-user",-->
-<!--                "Username": Username-->
-<!--            }-->
-<!--        });-->
-<!--        let json = await response.json();-->
-<!--        return json["userID"];-->
-<!--    }-->
+        let response = await fetch("http://localhost:8080/Project1/user", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "view-ind-user",
+                "Username": Username
+            }
+        });
+        let json = await response.json();
+        return await json["userID"];
+    }
 
-    var currentUser = 2;
+    var currentUser = getUserId("username");
 
     checkinForm.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -100,7 +100,7 @@
 
     purchaseForm.addEventListener("submit", function(event) {
         event.preventDefault();
-        submitPurchase(flightIdP.value, 2);
+        submitPurchase(flightIdP.value, currentUser);
     });
 
     async function submitCancel(ticketId) {
@@ -159,9 +159,12 @@
         });
 
         let json = await response.json();
+        await fillFlightTable(json);
+    })();
+
+    function fillFlightTable(json) {
         console.log("received");
         let table = document.getElementById("Flight_Table");
-
         for(let element of json) {
             let tr = table.insertRow(-1);
             for(let key in element) {
@@ -169,7 +172,8 @@
                 cell.innerHTML =  element[key];
             }
         }
-    })();
+    }
+
 
 
     (async function getTicketList() {
@@ -186,9 +190,12 @@
         });
 
         let json = await response.json();
+        await fillTicketTable(json);
+    })();
+
+    function fillTicketTable(json) {
         console.log("received");
         let table = document.getElementById("myTickets");
-
         for(let element of json) {
             let ttr = table.insertRow(-1);
             for(let key in element) {
@@ -196,7 +203,7 @@
                 cell.innerHTML =  element[key];
             }
         }
-    })();
+    }
 
 
 </script>

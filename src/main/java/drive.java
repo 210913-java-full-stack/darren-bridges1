@@ -12,7 +12,6 @@ import repos.FlightRepo;
 import repos.TicketRepo;
 import repos.UserRepo;
 import services.GlobalStore;
-import services.TicketService;
 
 import java.util.List;
 
@@ -63,12 +62,22 @@ public class drive {
 
         ObjectMapper om = new ObjectMapper();
 
+        List<Ticket> tl = TicketRepo.getTicketsByFlight(2);
+        for (int i = 0; i < tl.size(); i++) {
+            System.out.println(tl.get(i).getUser());
+        }
 
-        TicketService.testMeth();
+        //FlightService fs = new FlightService();
+        //TicketService ts = new TicketService();
+        //TicketService.testMeth();
+
+        //Explanation: At some point Catalina the servlet container causes the classloader to load
+        //the ServletInputStream class. For some reason this does not get loaded implicitly when
+        //the classloader loads the classes that include servlet objects.
+
 
 
         //System.out.println(om.writeValueAsString(ret));
-
 
 
 
