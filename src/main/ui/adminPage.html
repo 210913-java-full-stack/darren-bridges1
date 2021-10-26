@@ -57,12 +57,26 @@
   <center> <button type="submit">View Flight</button> </center>
 </form>
 
-<div id="div1"></div>
+<br><br>
+
+<form id="pviewer">
+    <center> <label for="flightIdVP"> Enter Flight ID to View Passenger List</label> </center>
+    <center> <input id="flightIdVP" type="number" name="flightIdVP" required><br> </center>
+    <center> <button type="submit">View Passenger List</button> </center>
+</form>
+
 <script>
     const schedForm = document.getElementById("scheduler");
     const delForm = document.getElementById("deleter");
     const viewForm = document.getElementById("viewer");
     const unForm = document.getElementById("unavailable");
+    const pviewForm = document.getElementById("pviewer");
+
+
+    pviewForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitpView(flightIdVP.value);
+     });
 
 
 
@@ -161,9 +175,12 @@
           Availability: ${json["available"]}  |`;
 
         await addElement(formatStr);
-        await addPass(flightId);
+
         }
 
+    async function submitpView(flightId) {
+        await addPass(flightId);
+    }
 
     async function submitUn(flightId) {
         let flightFormObject = {
