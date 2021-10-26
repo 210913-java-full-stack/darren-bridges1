@@ -27,18 +27,19 @@ public class TicketService {
         TicketRepo.purchaseTicket(FlightRepo.getFlightByNum(flightId), UserRepo.getUserByNum(userId));
     }
 
-    public static int testMeth() {
-        return 1;
-    }
+
     public static String getFlightTickets(int flight) {
+        System.out.println("Flight number: " + flight);
         List<User> ret = new LinkedList<>();
-        List<Ticket> repoRet = TicketRepo.getTicketsByFlight(flight);
+        List<Ticket> repoRet = TicketRepo.getTicketsByFlight(2);
         String stringRet = null;
+        System.out.println("repoRet size: " + repoRet.size());
         for (int i = 0; i < repoRet.size(); i++) {
             ret.add(repoRet.get(i).getUser());
         }
         try {
-             stringRet = mapper.writeValueAsString(ret);
+            stringRet = mapper.writeValueAsString(ret);
+            System.out.println("stringRet: " + stringRet);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -105,7 +106,6 @@ public class TicketService {
             case "view-tickets-of-flight":
                 int flightId = Integer.parseInt(req.getHeader("flight"));
                 return getFlightTickets(flightId);
-
         }
 
         return "noSuchTickets";

@@ -160,8 +160,8 @@
           Arrives at: ${json["arrive"]}  |
           Availability: ${json["available"]}  |`;
 
-        addElement(formatStr);
-        addPass(flightId);
+        await addElement(formatStr);
+        await addPass(flightId);
         }
 
 
@@ -197,7 +197,8 @@
         thead.appendChild(row_1);
 
         document.getElementById('body').appendChild(table);
-
+        alert("sanity check");
+        console.log("flightId: ", flightId)
         let response = await fetch("http://localhost:8080/Project1/ticket", {
             method: "GET",
             headers: {
@@ -208,12 +209,13 @@
         });
 
         let json = await response.json();
+        console.log(json);
 
 
-        for (let i = 0; i < 3; i++) {
+        for (let user of json) {
             let row = document.createElement('tr');
             let row_data = document.createElement('td');
-            row_data.innerHTML = i;
+            row_data.innerHTML = user["userID"];
             row.appendChild(row_data);
             tbody.appendChild(row);
         }
