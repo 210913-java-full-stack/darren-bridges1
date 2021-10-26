@@ -10,6 +10,9 @@ import org.hibernate.Transaction;
 import services.GlobalStore;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -59,4 +62,15 @@ public class TicketRepo {
         }
         return res;
     }
+
+    public static List<Ticket> getMyTickets(int userId) {
+        CriteriaBuilder build = GlobalStore.getSession().getCriteriaBuilder();
+        CriteriaQuery<Ticket> query = build.createQuery(Ticket.class);
+        Root<Ticket> root = query.from(Ticket.class);
+        query.select(root).where(build.equal( root.get("user"), userId) );
+        List<Ticket> ret = GlobalStore.getSession().createQuery(query).getResultList();
+        return ret;
+    }
+
+
 }

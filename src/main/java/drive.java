@@ -2,6 +2,8 @@ import Models.Flight;
 import Models.Ticket;
 import Models.User;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
@@ -10,12 +12,14 @@ import repos.FlightRepo;
 import repos.TicketRepo;
 import repos.UserRepo;
 import services.GlobalStore;
+import services.TicketService;
 
 import java.util.List;
 
 public class drive {
-    public static void main(String args[]) throws ClassNotFoundException {
+    public static void main(String args[]) throws ClassNotFoundException, JsonProcessingException {
         Class.forName("org.mariadb.jdbc.Driver");
+
         Configuration config = new Configuration();
         config.addAnnotatedClass(Flight.class);
         config.addAnnotatedClass(Ticket.class);
@@ -53,8 +57,20 @@ public class drive {
 
         repos.FlightRepo.deleteByNumber(1);
 
-        TicketRepo.cancelTicket(2);
+
         System.out.println(UserRepo.getUser("username"));
+
+
+        ObjectMapper om = new ObjectMapper();
+
+
+        TicketService.testMeth();
+
+
+        //System.out.println(om.writeValueAsString(ret));
+
+
+
 
         GlobalStore.getSession().close();
 
