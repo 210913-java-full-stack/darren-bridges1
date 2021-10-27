@@ -57,7 +57,9 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        resp.getWriter().write(UserService.viewUser(req));
+        String string = UserService.viewUser(req);
+        System.out.println(string);
+        resp.getWriter().write(string);
         resp.setContentType("application/json");
         resp.setStatus(200);
 
