@@ -24,7 +24,7 @@ public class TicketService {
     private static ObjectMapper mapper = new ObjectMapper();
 
     public static void purchaseFlight(int userId, int flightId) {
-        TicketRepo.purchaseTicket(FlightRepo.getFlightByNum(flightId), UserRepo.getUserByNum(userId));
+        TicketRepo.purchaseTicket(FlightRepo.getExFlight(flightId), UserRepo.getUserByNum(userId));
     }
 
 
@@ -87,6 +87,9 @@ public class TicketService {
                     String jsonText = sc.useDelimiter("\\A").next();
                     int userId = Integer.parseInt(req.getHeader("user"));
                     int flightId = mapper.readValue(jsonText, Flight.class).getFlightNumber();
+                    System.out.println(userId);
+                    System.out.println(flightId);
+
                     purchaseFlight(userId, flightId);
 
                 } catch (IOException e) {

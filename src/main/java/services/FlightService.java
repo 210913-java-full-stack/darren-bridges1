@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import repos.FlightRepo;
+import repos.TicketRepo;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +60,13 @@ public class FlightService {
 
                 try {
                     String jsonText = sc.useDelimiter("\\A").next();
-                    deleteFlight(mapper.readValue(jsonText, Flight.class).getFlightNumber());
+                    Flight fn = mapper.readValue(jsonText, Flight.class);
+                    Flight flight = GlobalStore.getSession().get(Flight.class, fn.getFlightNumber());
+                    System.out.println(flight.getTicketList().size());
+                    for (int i = 0; i < flight.getTicketList().size(); i++) {
+                        TicketRepo.cancelTicket(flight.getTicketList().get(i).getTicketID());
+                    }
+                    deleteFlight(fn.getFlightNumber());
                 } catch (JsonProcessingException e) {
                     e.printStackTrace(); //Add e logger
                 }
