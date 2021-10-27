@@ -30,7 +30,7 @@ public class UserRepo {
         CriteriaQuery<User> query = build.createQuery(User.class);
         Root<User> root = query.from(User.class);
         query.select(root).where(build.equal( root.get("username"), username) );
-        return GlobalStore.getSession().createQuery(query).getResultList().get(0);
+        return GlobalStore.getSession().createQuery(query).getSingleResult();
     }
 
 

@@ -127,6 +127,18 @@ import javax.servlet.http.HttpServletRequest;
                      e.printStackTrace(); //Add e logger
                  }
                  break;
+             case "validate-user":
+                 User dbCheck = UserRepo.getUser(req.getHeader("Username"));
+                 if (dbCheck == null) {
+                     return null;
+                 } else if (! dbCheck.getPassword().equals(req.getHeader("Password"))) {
+                     return null;
+                 }
+                 try {
+                     return mapper.writeValueAsString(dbCheck);
+                 } catch (JsonProcessingException e) {
+                     e.printStackTrace();
+                 }
 
 
          }
