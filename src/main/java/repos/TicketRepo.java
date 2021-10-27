@@ -40,6 +40,19 @@ public class TicketRepo {
 
     }
 
+    public static void cancelTicketF(int flightNum) {
+        Transaction del = GlobalStore.getSession().beginTransaction();
+        Query query = GlobalStore.getSession().createQuery(
+                "DELETE Ticket WHERE flight = :flightNum");
+        query.setParameter("flightNum", flightNum);
+        int result = query.executeUpdate();
+        System.out.println("test");
+        GlobalStore.getSession().flush();
+        GlobalStore.getSession().clear();
+        del.commit();
+
+    }
+
     public static void cancelTicket(int ticketNumber) {
         Transaction del = GlobalStore.getSession().beginTransaction();
         Query query = GlobalStore.getSession().createQuery(
@@ -49,9 +62,8 @@ public class TicketRepo {
         GlobalStore.getSession().flush();
         GlobalStore.getSession().clear();
         del.commit();
-
-
     }
+
     public static List<Ticket> getTicketListForFlight(int flightId){
         List<Ticket> res = new LinkedList<>();
         Flight flight = GlobalStore.getSession().get(Flight.class, flightId);

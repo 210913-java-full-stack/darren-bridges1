@@ -23,7 +23,7 @@ public class Flight {
     @Column
     private boolean available;
 
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", cascade =CascadeType.ALL)
     private List<Ticket> ticketList = new LinkedList<>();
 
     public void clearList() {
