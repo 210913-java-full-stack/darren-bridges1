@@ -26,9 +26,8 @@ import java.util.Scanner;
 
 public class FlightService {
 
-    /*
-    Create an ObjectMapper to return JSON strings
-     */
+
+    //Create an ObjectMapper to return JSON strings
     private static ObjectMapper mapper = new ObjectMapper();
 
     /*
