@@ -172,7 +172,6 @@ public class TicketService {
     public static String viewTicketManager(HttpServletRequest req) {
         //Read the header to determine the type of GET request
         String header = req.getHeader("header");
-
         switch (header) {
             //View all Tickets a User has
             case "view-my-ticket":

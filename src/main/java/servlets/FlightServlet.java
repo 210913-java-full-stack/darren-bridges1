@@ -22,7 +22,6 @@ public class FlightServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        System.out.println(FlightService.viewFlightManager(req));
         resp.getWriter().write(FlightService.viewFlightManager(req));
         resp.setContentType("application/json");
         resp.setStatus(200);
