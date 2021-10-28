@@ -10,7 +10,7 @@
         background-image: url("https://media.istockphoto.com/photos/commercial-jet-flying-over-clouds-picture-id155380716?b=1&k=20&m=155380716&s=170667a&w=0&h=LjalFiyrKtBye-26dufNMHkbU_k_KrJ1-UYnbTpaxtM=");
   background-position: 50% 50%;
   background-repeat: no-repeat;
-   pointer-events: none;
+   pointer-events: auto;
    background-attachment: fixed;
   background-size: cover;
    }
@@ -18,9 +18,9 @@
 </head>
 
 <body>
-<center> <h1> User Menu </h1></center>
+<center> <h1 id="title"> User Menu </h1></center>
 <div>
-    <table>
+    <center><table>
         <thead>
         <tr>
           <th> <center> Flight Number:</center> </th>
@@ -33,11 +33,11 @@
         <tbody id="Flight_Table">
 
         </tbody>
-    </table>
+    </table></center>
 </div>
 
 <br><br>
-
+<center><h2>Purchase Ticket</h2></center>
 <form id="purchase">
     <center>  <label for="flightIdP">Enter Flight To Buy Ticket For:</label> </center>
     <center> <input id="flightIdP" type="number" name="flightIdP" required><br> </center>
@@ -45,7 +45,7 @@
 </form>
 
 <br><br>
-
+<center><h2>Check In to Flight</h2></center>
 <form id="checkin">
    <center>  <label for="ticketIdC">Enter Ticket to Check In: </label> </center>
    <center> <input id="ticketIdC" type="number" name="ticketIdC" required><br> </center>
@@ -53,7 +53,7 @@
 </form>
 
 <br><br>
-
+<center><h2>Cancel Ticket</h2></center>
 <form id="cancel">
   <center> <label for="ticketIdX">Enter Ticket to Cancel: </label> </center>
   <center> <input id="ticketIdX" type="number" name="ticketIdX" required><br> </center>
@@ -62,7 +62,7 @@
 
 <br><br>
 
-<div>
+<center><div>
     <th>  My Tickets: </th>
     <table>
         <thead>
@@ -76,7 +76,7 @@
 
         </tbody>
     </table>
-</div>
+</div></center>
 
 
 
@@ -87,6 +87,9 @@
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const currentUser = urlParams.get('userId');
+    const welcome = urlParams.get('username');
+
+    document.getElementById("title").innerHTML= "Welcome " + welcome;
 
 
 

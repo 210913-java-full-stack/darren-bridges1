@@ -46,7 +46,7 @@
 <body>
 
     <center> <h1> User Login Menu </h1></center>
-<form>
+
 
 
 <form id="login">
@@ -93,18 +93,11 @@
             return;
         } else if (json["roleID"] == "user") {
 
-            window.location.href = `userPage.html?userId=${json["userID"]}`;
+            window.location.href = `userPage.html?userId=${json["userID"]}&username=${json["username"]}`;
         } else if (json["roleID"] == "admin") {
-            window.location.href = `adminPage.html?userId=${json["userID"]}`;
+            window.location.href = `adminPage.html?userId=${json["userID"]}&username=${json["username"]}`;
         }
     }
-
-
-
-
-
-
-
 </script>
 </body>
 </html>

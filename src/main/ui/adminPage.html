@@ -10,7 +10,7 @@ Body {
         background-image: url("https://media.istockphoto.com/photos/commercial-jet-flying-over-clouds-picture-id155380716?b=1&k=20&m=155380716&s=170667a&w=0&h=LjalFiyrKtBye-26dufNMHkbU_k_KrJ1-UYnbTpaxtM=");
   background-position: 50% 50%;
   background-repeat: no-repeat;
-   pointer-events: none;
+   pointer-events: auto;
 background-attachment: fixed;
   background-size: cover;
 }
@@ -19,26 +19,28 @@ background-attachment: fixed;
 </head>
 
 
-<body id="body">
+<center><body id="body">
 
 
 
 
-<center> <h1> Admin Menu</h1></center>
+<center> <h1 id="title"> Admin Menu</h1></center>
 
 
 
+<br>
 
 
 <form id="scheduler">
   <center> <label for="depart">Enter Departure Location:</label></center>
-  <center>  <input id="depart" type="text" name="depart" required> <br></center>
+  <center>  <input placeholder="Departure City" id="depart" type="text" name="depart" required> <br></center>
     <center> <label for="arrive">Enter Arrival Location:</label></center>
-   <center> <input id="arrive" type="text" name="arrive" required> <br></center>
+   <center> <input placeholder="Arrival City" id="arrive" type="text" name="arrive" required> <br></center>
    <center> <button type="submit">Submit Flight</button></center>
 </form>
 
 <br><br>
+<center><h2>Delete Flight</h2></center>
 <form id="deleter">
    <center> <label for="flightId">Enter Flight ID to Delete:</label> </center>
     <center>  <input id="flightId" type="number" name="flightId" required><br> </center>
@@ -46,7 +48,7 @@ background-attachment: fixed;
 </form>
 
 <br><br>
-
+<center><h2>Takeoff Flight</h2></center>
 <form id="unavailable">
    <center> <label for="flightIdU"> Enter Flight ID to make unavailable</label> </center>
     <center> <input id="flightIdU" type="number" name="flightIdU" required><br> </center>
@@ -54,7 +56,7 @@ background-attachment: fixed;
 </form>
 
 <br><br>
-
+<center><h2>View Flight</h2></center>
 <form id="viewer">
    <center> <label for="flightIdV"> Enter Flight ID to View</label> </center>
     <center> <input id="flightIdV" type="number" name="flightIdV" required><br> </center>
@@ -62,7 +64,7 @@ background-attachment: fixed;
 </form>
 
 <br><br>
-
+<center><h2>View Flight Ticket List</h2></center>
 <form id="pviewer">
     <center> <label for="flightIdVP"> Enter Flight ID to View Passenger List</label> </center>
     <center> <input id="flightIdVP" type="number" name="flightIdVP" required><br> </center>
@@ -75,6 +77,11 @@ background-attachment: fixed;
     const viewForm = document.getElementById("viewer");
     const unForm = document.getElementById("unavailable");
     const pviewForm = document.getElementById("pviewer");
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const welcome = urlParams.get('username');
+
+    document.getElementById("title").innerHTML= "Welcome " + welcome;
 
 
     pviewForm.addEventListener("submit", function(event) {
@@ -217,7 +224,6 @@ background-attachment: fixed;
         thead.appendChild(row_1);
 
         document.getElementById('body').appendChild(table);
-        alert("sanity check");
         console.log("flightId: ", flightId)
         let response = await fetch("http://localhost:8080/Project1/ticket", {
             method: "GET",
@@ -248,5 +254,5 @@ background-attachment: fixed;
 
 
 </script>
-</body>
+</body></center>
 </html>
