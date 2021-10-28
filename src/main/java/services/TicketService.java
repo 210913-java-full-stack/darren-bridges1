@@ -4,6 +4,7 @@ import Models.Flight;
 import Models.ModTicket;
 import Models.Ticket;
 import Models.User;
+import Util.FileLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import repos.FlightRepo;
@@ -65,7 +66,7 @@ public class TicketService {
 
         } catch (JsonProcessingException e) {
             //Log any exception
-            e.printStackTrace(); //TODO e logger
+            FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
         }
         //Return JSON String
         return stringRet;
@@ -99,7 +100,7 @@ public class TicketService {
 
         } catch (JsonProcessingException e) {
             //Log any exceptions
-            e.printStackTrace(); //TODO e logger
+            FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
         }
         //Return JSON String
         return ret;
@@ -135,7 +136,7 @@ public class TicketService {
 
         } catch (IOException e) {
             //Log any Exceptions
-            e.printStackTrace(); //TODO e logger
+            FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
         }
 
         //Create Scanner to read the body
@@ -230,7 +231,7 @@ public class TicketService {
 
                 } catch (IOException e) {
                     //Log any exceptions
-                    e.printStackTrace(); //TODO Add e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
 
@@ -248,7 +249,7 @@ public class TicketService {
 
                 } catch (IOException e) {
                     //Log any exceptions
-                    e.printStackTrace(); //TODO Add e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
         }

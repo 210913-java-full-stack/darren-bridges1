@@ -1,6 +1,7 @@
 package services;
 
 import Models.Flight;
+import Util.FileLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import repos.FlightRepo;
@@ -25,8 +26,6 @@ import java.util.Scanner;
 
 
 public class FlightService {
-
-
     //Create an ObjectMapper to return JSON strings
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -67,7 +66,7 @@ public class FlightService {
 
         } catch (IOException e) {
             //Log any exceptions
-            e.printStackTrace(); //TODO: exception logger
+            FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
         }
 
         //Scanner to read the body
@@ -90,7 +89,7 @@ public class FlightService {
 
                 } catch (IOException e) {
                     //Log any exceptions
-                    e.printStackTrace(); //TODO Add e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
 
@@ -116,7 +115,7 @@ public class FlightService {
 
                 } catch (JsonProcessingException e) {
                     //Log any exceptions
-                    e.printStackTrace(); //TODO Add e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
 
@@ -131,7 +130,7 @@ public class FlightService {
 
                 } catch (JsonProcessingException e) {
                     //log any exceptions
-                    e.printStackTrace(); //TODO e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
         }
@@ -157,7 +156,7 @@ public class FlightService {
 
                 } catch (JsonProcessingException e) {
                     //Log any Exceptions
-                    e.printStackTrace(); //TODO Add e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
 
@@ -172,7 +171,7 @@ public class FlightService {
 
                 } catch (JsonProcessingException e) {
                     //Log any exceptions
-                    e.printStackTrace(); //TODO e logger
+                    FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                 }
                 break;
         }
