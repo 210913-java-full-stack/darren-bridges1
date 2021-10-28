@@ -1,11 +1,8 @@
 package repos;
 
 import Models.Flight;
-import Models.Ticket;
-import jdk.nashorn.internal.objects.Global;
 import org.hibernate.Transaction;
 import services.GlobalStore;
-
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,17 +10,17 @@ import javax.persistence.criteria.Root;
 import java.util.LinkedList;
 import java.util.List;
 
+
 /**
- * The FlightRepo class contains all hibernate queries for accessing a database to
- * retrieve information about flight objects. Utilized by the FlightService class
- * primarily but can be called anywhere.
+ * The FlightRepo class contains methods for all hibernate queries for accessing a
+ * database to retrieve information about flight objects. Utilized by the
+ * FlightService class primarily but can be called anywhere.
  *
  *
  * @author  Chris Oh and Darren Bridges
  * @version 1.0
  * @since   2021-10-27
  */
-
 
 
 public class FlightRepo {
