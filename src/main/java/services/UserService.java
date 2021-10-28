@@ -1,148 +1,79 @@
 package services;
 
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
 import Models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import repos.UserRepo;
-
 import javax.servlet.http.HttpServletRequest;
+
+
+/**
+ * The UserService class implements the sole method from the UserRepo and does so
+ * in order to validate a user. It does so to send a user object to the front end
+ * that can be persisted across web pages.
+ *
+ * @author Chris Oh and Darren Bridges
+ * @version 1.0
+ * @since 2021-10-27
+ */
+
 
  public class UserService {
 
+    //Create ObjectMapper to convert objects to JSON Strings
     private static ObjectMapper mapper = new ObjectMapper();
 
-    private static User getUser(String username) {
-         return UserRepo.getUser(username);
-     }
-    private String userName;
-    private String password;
-
-    public String getUserName() {
-        return userName;
-    }
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserService(String userName, String password) {
-        super();
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public void registerUser(User aUser, String propFilePath) {
-
-        Properties p = new Properties();
-        FileInputStream fis = null;
-
-        try {
-            fis = new FileInputStream(propFilePath);
-            p.load(fis);
-            p.setProperty(aUser.getUsername(), aUser.getPassword());
-            p.store(new FileOutputStream(propFilePath), null);
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } finally {
-            if(fis!=null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public boolean validateUser(User aUser, String propFilePath){
-        boolean success = true;
-        Properties p = new Properties();
-        FileInputStream fis = null;
-
-        try {
-            fis = new FileInputStream(propFilePath);
-
-            p.load(fis);
-
-            // Checks whether the username exists or not
-            if(!p.containsKey(aUser.getUsername())) {
-                // Link-redirection
-                success = false;
-            }  else { // Checks whether the password matches or not
-                String pword = p.getProperty(aUser.getUsername());
-                if(!pword.equals(aUser.getPassword())) {
-                    success = false; // Link-redirection
-                } else {
-                    success = true; // Link-redirection
-                }
-            }
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            success = false;
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            success = false;
-        } finally {
-            if(fis!=null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-        }
-        return success;
-    }
-
+    /*
+    This method interprets GET requests sent to the UserServlet
+     */
      public static String viewUser(HttpServletRequest req) {
+         //Read the header to denote the type of GET request
          String header = req.getHeader("header");
+
          switch(header) {
+             //Get a User object from the database based on username field
              case "view-ind-user":
                  try {
+                     //Get User object from database
                      User user = UserRepo.getUser(req.getHeader("Username"));
+
+                     //Convert the User object to a JSON String and return it
                      return mapper.writeValueAsString(user);
+
                  } catch (JsonProcessingException e) {
-                     e.printStackTrace(); //Add e logger
+                     //Log any exceptions
+                     e.printStackTrace(); //TODO Add e logger
                  }
                  break;
+
+             //Receive a username and password and check if it exists in the database
              case "validate-user":
+                 //Check to see if the username is valid
                  User dbCheck = UserRepo.getUser(req.getHeader("Username"));
+
+                 //If username is not valid, log in fails
                  if (dbCheck == null) {
                      return null;
+
+                 //Checks to see if the Password for that username matches the one stored in the database.
+                 //If not, log in fails
                  } else if (! dbCheck.getPassword().equals(req.getHeader("Password"))) {
                      return null;
                  }
+
+                 //If both checks pass, the User object is retrieved from the
+                 // database and sent back to the front end
                  try {
+                     //The User object is returned as a JSON String
                      return mapper.writeValueAsString(dbCheck);
+
                  } catch (JsonProcessingException e) {
-                     e.printStackTrace();
+                     //Log any exceptions
+                     e.printStackTrace(); //TODO e logger
                  }
-
-
          }
-         return "NoSuchFlight";
+         //Return alternative result
+         return null;
      }
 }
 
