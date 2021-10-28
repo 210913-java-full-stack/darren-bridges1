@@ -47,8 +47,13 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <center> <h1> User Login Menu </h1></center>
 <form>
+=======
+    <center> <h1> User Login Form </h1></center>
+<form id="login">
+>>>>>>> aaa2a5dfa5dab50966c73f66c9c0f710c07e86f6
     <div class="container">
         <label> Username:</label>
         <input type ="text" placeholder="Enter Username" name="username" id="username" required>
@@ -62,34 +67,45 @@
 
 </form>
     <script>
-        const form = document.getElementById("myForm");
+    const form = document.getElementById("login");
 
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            //const { message, complete = false } = event.target.elements;
-            console.log("message.value: ", message.value);
-            submitForm(message.value);
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        submitForm(username.value, password. value);
+    });
+
+
+    async function submitForm(use, pass) {
+        let response = await fetch("http://localhost:8080/Project1/user", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "header": "validate-user",
+                "Username": use,
+                "Password": pass
+            }
         });
 
-        async function submitForm(messageValue) {
-            let formObject = {
-                username: userVar
-                password: passVar
-            }
+        let json = await response.json();
+        console.log(json);
 
-            console.log("formObject: ", formObject);
+        if (json == null) {
+            alert("Invalid Flight ID");
+            return;
+        } else if (json["roleID"] == "user") {
 
-            //http://localhost:8080/to-do-api/toDoItems
-            //http://todoapp.us-east-2.elasticbeanstalk.com/toDoItems
-<!--            let response = await fetch("http://todoapp.us-east-2.elasticbeanstalk.com/toDoItems", {-->
-<!--                method: "POST",-->
-<!--                headers: {-->
-<!--                    "Content-Type": "application/json",-->
-<!--                    "payload-type": "new-item"-->
-<!--                },-->
-<!--                body: JSON.stringify(formObject)-->
-<!--            });  -->
+            window.location.href = `userPage.html?userId=${json["userID"]}`;
+        } else if (json["roleID"] == "admin") {
+            window.location.href = `adminPage.html?userId=${json["userID"]}`;
+        }
+    }
 
-            </script>
+
+
+
+
+
+
+</script>
 </body>
 </html>

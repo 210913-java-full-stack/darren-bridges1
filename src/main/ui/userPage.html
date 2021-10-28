@@ -84,23 +84,11 @@
     const purchaseForm = document.getElementById("purchase");
     const checkinForm = document.getElementById("checkin");
     const cancelForm = document.getElementById("cancel");
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const currentUser = urlParams.get('userId');
 
 
-<!--    async function getUserId(Username) {-->
-
-<!--        let response = await fetch("http://localhost:8080/Project1/user", {-->
-<!--            method: "GET",-->
-<!--            headers: {-->
-<!--                "Content-Type": "application/json",-->
-<!--                "header": "view-ind-user",-->
-<!--                "Username": Username-->
-<!--            }-->
-<!--        });-->
-<!--        let json = await response.json();-->
-<!--        return await json["userID"];-->
-<!--    }-->
-
-    var currentUser = 2;
 
     checkinForm.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -193,13 +181,13 @@
     (async function getTicketList() {
 
 
-        console.log("I hate Javascript");
+
         let response = await fetch("http://localhost:8080/Project1/ticket", {
             method: "GET",
             headers: {
             "Content-Type": "application/json",
             "header": "view-my-ticket",
-            "user": "2"
+            "user": currentUser
             }
         });
 

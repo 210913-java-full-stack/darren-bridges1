@@ -23,7 +23,11 @@ background-attachment: fixed;
 
 
 
+<<<<<<< HEAD
 <center> <h1> Admin Menu</h1></center>
+=======
+<center> <h1>Admin Page</h1></center>
+>>>>>>> aaa2a5dfa5dab50966c73f66c9c0f710c07e86f6
 
 
 <form id="scheduler">
@@ -124,8 +128,6 @@ background-attachment: fixed;
             available: true
         }
 
-        console.log("flightFormObject: ", flightFormObject);
-
         let response = await fetch("http://localhost:8080/Project1/flight", {
             method: "POST",
             headers: {
@@ -169,6 +171,7 @@ background-attachment: fixed;
             alert("Invalid Flight ID");
             return;
         }
+        console.log(json);
         let formatStr = `|  Flight Number: ${json["flightNumber"]}  |
           Departs from: ${json["depart"]}  |
           Arrives at: ${json["arrive"]}  |
