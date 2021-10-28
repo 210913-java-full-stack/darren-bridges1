@@ -55,7 +55,7 @@ import javax.servlet.http.HttpServletRequest;
                  if (dbCheck == null) {
                      return null;
 
-                 //Checks to see if the Password for that username matches the one stored in the databse.
+                 //Checks to see if the Password for that username matches the one stored in the database.
                  //If not, log in fails
                  } else if (! dbCheck.getPassword().equals(req.getHeader("Password"))) {
                      return null;

@@ -1,13 +1,21 @@
 package servlets;
 
-
 import services.TicketService;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+
+/**
+ * The TicketServlet class handles all requests that pertain to Ticket resources
+ *
+ * @author Chris Oh and Darren Bridges
+ * @version 1.0
+ * @since 2021-10-27
+ */
+
 
 public class TicketServlet extends HttpServlet {
 
