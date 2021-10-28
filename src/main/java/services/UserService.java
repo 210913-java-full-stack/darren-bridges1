@@ -1,6 +1,7 @@
 package services;
 
 import Models.User;
+import Util.FileLogger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import repos.UserRepo;
@@ -42,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 
                  } catch (JsonProcessingException e) {
                      //Log any exceptions
-                     e.printStackTrace(); //TODO Add e logger
+                     FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                  }
                  break;
 
@@ -69,7 +70,7 @@ import javax.servlet.http.HttpServletRequest;
 
                  } catch (JsonProcessingException e) {
                      //Log any exceptions
-                     e.printStackTrace(); //TODO e logger
+                     FileLogger.getFileLogger().writeLog(e.getMessage(), 0);
                  }
          }
          //Return alternative result
